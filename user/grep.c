@@ -67,28 +67,34 @@ main(int argc, char *argv[])
 int matchhere(char*, char*);
 int matchstar(int, char*, char*);
 
+/*
+^: search from start of string
+&: search from end of string
+.: match any character(not null)
+*: match a character(once or more)
+*/
 int
 match(char *re, char *text)
 {
   if(re[0] == '^')
-    return matchhere(re+1, text);
+    return matchhere(re+1, text); //match from start
   do{  // must look at empty string
     if(matchhere(re, text))
       return 1;
-  }while(*text++ != '\0');
+  }while(*text++ != '\0'); //or search one by one
   return 0;
 }
 
 // matchhere: search for re at beginning of text
 int matchhere(char *re, char *text)
 {
-  if(re[0] == '\0')
+  if(re[0] == '\0') //regex is null
     return 1;
-  if(re[1] == '*')
+  if(re[1] == '*') //regex is '*'
     return matchstar(re[0], re+2, text);
-  if(re[0] == '$' && re[1] == '\0')
+  if(re[0] == '$' && re[1] == '\0') //regex is '...$\0' 
     return *text == '\0';
-  if(*text!='\0' && (re[0]=='.' || re[0]==*text))
+  if(*text!='\0' && (re[0]=='.' || re[0]==*text)) //regex is '.' and *text is not null or regex equals *text
     return matchhere(re+1, text+1);
   return 0;
 }

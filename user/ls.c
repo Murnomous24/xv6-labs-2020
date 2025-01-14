@@ -57,7 +57,7 @@ ls(char *path)
     while(read(fd, &de, sizeof(de)) == sizeof(de)){
       if(de.inum == 0)
         continue;
-      memmove(p, de.name, DIRSIZ);
+      memmove(p, de.name, DIRSIZ); //file's name length shouldn't over 14 ?
       p[DIRSIZ] = 0;
       if(stat(buf, &st) < 0){
         printf("ls: cannot stat %s\n", buf);

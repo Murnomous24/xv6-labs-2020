@@ -44,7 +44,7 @@ memset(void *dst, int c, uint n)
 }
 
 char*
-strchr(const char *s, char c)
+strchr(const char *s, char c) //search char c position in char array s
 {
   for(; *s; s++)
     if(*s == c)
@@ -103,10 +103,10 @@ memmove(void *vdst, const void *vsrc, int n)
 
   dst = vdst;
   src = vsrc;
-  if (src > dst) {
+  if (src > dst) { //if source's address is higher, from start to end
     while(n-- > 0)
       *dst++ = *src++;
-  } else {
+  } else { //if source's address is lower, from end to start
     dst += n;
     src += n;
     while(n-- > 0)
