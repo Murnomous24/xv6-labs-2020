@@ -127,6 +127,8 @@ found:
   p->context.ra = (uint64)forkret;
   p->context.sp = p->kstack + PGSIZE;
 
+  p->tracemask = 0; //Lab 2 System Call Tracing mask initalize
+
   return p;
 }
 
@@ -297,6 +299,7 @@ fork(void)
 
   release(&np->lock);
 
+  np->tracemask = p->tracemask; // Lab 2 System Call Tracing : child inherit parent's tracemask
   return pid;
 }
 
@@ -692,4 +695,21 @@ procdump(void)
     printf("%d %s %s", p->pid, state, p->name);
     printf("\n");
   }
+}
+
+uint64 count_free_process(void) {
+  uint64 count;
+  struct proc *p;
+
+  count = 0;
+
+  for(p = proc; p < &proc[NPROC]; p ++) {
+    acquire(&p->lock);
+    if(p->state != UNUSED) {
+      count ++;
+    }
+    release(&p->lock);
+  }
+
+  return count;
 }
