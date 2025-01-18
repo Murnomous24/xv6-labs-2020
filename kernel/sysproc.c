@@ -102,8 +102,7 @@ uint64 sys_trace(void) {
   if(argint(0, &number) < 0) {
     return -1;
   }
-
-  printf("sys_trace: get number %d\n", number);
+  
   myproc()->tracemask |= number;
   return 0;
 }
