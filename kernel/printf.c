@@ -165,6 +165,7 @@ static void print_aligned2(char *str, int len, int width, int left_align)
 }
 
 // Print to the console. only understands %d, %x, %p, %s.
+// New printf support %-10d %-20s format.
 void
 printf(char *fmt, ...)
 {
