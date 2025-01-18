@@ -697,6 +697,8 @@ procdump(void)
   }
 }
 
+// count non-free process of NPROC(64) process
+// use acquire to lock the process
 uint64 count_free_process(void) {
   uint64 count;
   struct proc *p;
@@ -714,6 +716,7 @@ uint64 count_free_process(void) {
   return count;
 }
 
+// implementation of ps(process), print out all non-unused process
 static char *num2state[] = {"UNUSED", "SLEEPING", "RUNNABLE", "RUNNING", "ZOMBIE"};
 void ps_info(void) {
   struct proc *p;
@@ -727,6 +730,7 @@ void ps_info(void) {
   }
 }
 
+// implementation of pstree, use blank to build a process tree
 void pstree_tree(struct proc *p, int *proc_depth) {
   for(int i = 0; i < proc_depth[p->pid]; i ++) {
     printf("  ");
@@ -743,6 +747,7 @@ void pstree_tree(struct proc *p, int *proc_depth) {
   }
 }
 
+// initialize with init process(pid = 1)
 void pstree_info(void) {
   struct proc *p;
   int proc_dpeth[64] = {};
