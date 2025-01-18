@@ -125,3 +125,13 @@ uint64 sys_sysinfo(void) {
 
   return 0;
 }
+
+uint64 sys_ps(void) {
+  ps_info();
+  return 0;
+}
+
+uint64 sys_pstree(void) {
+  pstree_info();
+  return 0;
+}

@@ -106,3 +106,4 @@ struct proc {
 
   uint64 tracemask;            // Lab 2 System call tracing bit
 };
+

@@ -713,3 +713,42 @@ uint64 count_free_process(void) {
 
   return count;
 }
+
+static char *num2state[] = {"UNUSED", "SLEEPING", "RUNNABLE", "RUNNING", "ZOMBIE"};
+void ps_info(void) {
+  struct proc *p;
+  printf("%-10s %-10s %-10s %-10s\n", "PID", "NAME", "STATE", "MEM");
+  for(p = proc; p < &proc[NPROC]; p ++) {
+    //acquire(&p->lock);
+    if(p->state == UNUSED) continue;
+
+    printf("%-10d %-10s %-10s %-10d\n", p->pid, p->name, num2state[p->state], p->sz);
+    //release(&p->lock);
+  }
+}
+
+void pstree_tree(struct proc *p, int *proc_depth) {
+  for(int i = 0; i < proc_depth[p->pid]; i ++) {
+    printf("  ");
+  }
+  printf("%s(%d)\n", p->name, p->pid);
+  
+  for(int i = 0; i < NPROC; i ++) {
+    struct proc *p_now;
+    p_now = proc + i;
+    if(p_now->state != UNUSED && p_now->parent && p_now->parent->pid == p->pid) {
+      proc_depth[p_now->pid] = proc_depth[p->pid] + 1;
+      pstree_tree(p_now, proc_depth);
+    }  
+  }
+}
+
+void pstree_info(void) {
+  struct proc *p;
+  int proc_dpeth[64] = {};
+  
+  p = proc; // init process
+  proc_dpeth[0] = 0;
+
+  pstree_tree(p, proc_dpeth);
+}

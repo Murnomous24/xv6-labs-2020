@@ -26,6 +26,8 @@ int sleep(int);
 int uptime(void);
 int trace(int);
 int sysinfo(struct sysinfo *);
+void ps(void);
+void pstree(void);
 
 // ulib.c
 int stat(const char*, struct stat*);
