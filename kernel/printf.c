@@ -96,7 +96,7 @@ static void printint2(int xx, int base, int sign, int width, int left_align)
   }
 
   // 输出内容
-  while(i -- >= 0) {
+  while(-- i >= 0) {
     consputc(buf[i]);
   }
 
